@@ -32,8 +32,12 @@ sudo apt install jq
 curl -sL https://deb.nodesource.com/setup_14.x | sudo bash -
 sudo apt-get install -y nodejs
 
+# Note: An older version of yarn (in package cmdtest)could be installed and would need to be uninstalled:
+# Error msg: npm ERR! EEXIST: file already exists
+sudo apt remove cmdtest
+
 # Installs Yarn
-curl -sL https://dl.yarnpkg.com/debian/pubkey.gpg | sudo apt-key add -
+curl -sL https://dl.yarnpkg.com/debian/pubkey.gpg | sudo gpg --import -
 echo "deb https://dl.yarnpkg.com/debian/ stable main" | sudo tee /etc/apt/sources.list.d/yarn.list
 sudo apt update && sudo apt install yarn
 
@@ -141,7 +145,7 @@ yarn start --passphrase=$GATEWAY_PASSPHRASE
 
 1. **Changing Gateway Port**
     
-    In certain cases, the default port, `5000`, might already be in use. As such you might need to change the port number accordingly. To do so modify the following yaml files accordingly:
+    In certain cases, the default port, `15888`, might already be in use. As such you might need to change the port number accordingly. To do so modify the following yaml files accordingly:
     
     - `$PROJECT_HOME/hummingbot/gateway/conf/server.yml`
         
@@ -153,7 +157,7 @@ yarn start --passphrase=$GATEWAY_PASSPHRASE
         id: <ID>
         ```
         
-    - `$PROJECT_HOME/hummingbot/conf/conf_global.yml`
+    - `$PROJECT_HOME/hummingbot/conf/conf_client.yml`
         
         ```yaml
         ...
@@ -181,7 +185,7 @@ Copy and paste individual commands into your terminal to execute the tests accor
 i.e.
 
 ```bash
-curl -s -X GET -k --key $GATEWAY_KEY --cert $GATEWAY_CERT [https://localhost:5000/](https://localhost:500/) | jq
+curl -s -X GET -k --key $GATEWAY_KEY --cert $GATEWAY_CERT [https://localhost:15888/](https://localhost:500/) | jq
 ```
 
 Expected Output:
